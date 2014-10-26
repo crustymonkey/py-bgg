@@ -24,7 +24,7 @@ setup(name='py-bgg' ,
     author='Jay Deiman' ,
     author_email='admin@splitstreams.com' ,
     url='http://stuffivelearned.org' ,
-    description='A simple Board Game Geek (boardgamegeek.com) API library'
+    description='A simple Board Game Geek (boardgamegeek.com) API library' ,
     long_description='A simple Board Game Geek (boardgamegeek.com) API '
         'library in Python. This mainly just handles the API calls '
         'and converts the XML to representative dict/list format' ,
