@@ -29,28 +29,30 @@ This library will essentially just convert your calls into a URL and
 subsequently return a dict/list tree of objects that are accessible via
 standard object notation or dictionary style access
 
-    #!/usr/bin/env python
-    
-    import json
-    from libbgg.apiv1 import BGG
+```python
+#!/usr/bin/env python
 
-    conn = BGG()
+import json
+from libbgg.apiv1 import BGG
 
-    # Perform a search
-    results = conn.search('bruges')
-    print json.dumps(results , indent=4 , sort_keys=True)
+conn = BGG()
 
-    # Print out a list of names that were returned
-    for game in results.boardgames.boardgame:
-        print game.name.TEXT
+# Perform a search
+results = conn.search('bruges')
+print json.dumps(results , indent=4 , sort_keys=True)
 
-    # You can also access items as a dictionary
-    for game in results['boardgames']['boardgame']:
-        print game['name']['TEXT']
+# Print out a list of names that were returned
+for game in results.boardgames.boardgame:
+    print game.name.TEXT
 
-    # Get game info
-    results = conn.get_game(136888 , stats=True)
-    print json.dumps(results , indent=4 , sort_keys=True)
+# You can also access items as a dictionary
+for game in results['boardgames']['boardgame']:
+    print game['name']['TEXT']
+
+# Get game info
+results = conn.get_game(136888 , stats=True)
+print json.dumps(results , indent=4 , sort_keys=True)
+```
 
 ## TODO ##
 
