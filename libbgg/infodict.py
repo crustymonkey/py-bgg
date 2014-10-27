@@ -10,7 +10,7 @@ a dictionary and return it.
 
 Example:
 
-from xmltodict import InfoDict
+from libbgg.infodict import InfoDict
 
 xml = '''<?xml version="1.0" encoding="UTF-8"?>
 <myroot>
@@ -19,7 +19,7 @@ xml = '''<?xml version="1.0" encoding="UTF-8"?>
 </myroot>
 '''
 
-d = InfoDict.xmlToInfoDict(xml)
+d = InfoDict.xml_to_info_dict(xml)
 print d['myroot']
 # You can also access items like objects, and multiple elements will the same
 # name will be a list:
