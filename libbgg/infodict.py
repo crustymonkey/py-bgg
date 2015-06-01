@@ -33,14 +33,14 @@ class InfoDict(dict):
     # Take advantage of compilation for performance
     strip_NS_re = re.compile('^\{?[^\}]*\}')
 
-    def __getattr__(self , name):
+    def __getattr__(self, name):
         """
         Add attribute access as an option
         """
         return self[name]
 
     @classmethod
-    def xml_to_info_dict(cls , xml , strip_NS=True):
+    def xml_to_info_dict(cls, xml, strip_NS=True):
         """
         Return an InfoDict which contains the xml tree
 
@@ -50,10 +50,10 @@ class InfoDict(dict):
         """
         d = cls()
         root = ET.fromstring(xml.strip())
-        d._build_dict_from_xml(d , root , strip_NS)
+        d._build_dict_from_xml(d, root, strip_NS)
         return d
 
-    def _build_dict_from_xml(self , d , el , strip_NS):
+    def _build_dict_from_xml(self, d, el, strip_NS):
         """
         Recursively construct an InfoDict from an ElementTree object
 
@@ -69,7 +69,7 @@ class InfoDict(dict):
             tag = self._strip_NS(el.tag)
         new_dict = InfoDict(el.attrib)
         if tag in d:
-            if not isinstance(d[tag] , list):
+            if not isinstance(d[tag], list):
                 # Handle multiple entries at the same level
                 val = d[tag]
                 d[tag] = [val]
@@ -78,26 +78,26 @@ class InfoDict(dict):
             d[tag] = None
         if children:
             # We have children
-            if isinstance(d[tag] , list):
+            if isinstance(d[tag], list):
                 d[tag].append(new_dict)
             else:
                 d[tag] = new_dict
             for c in children:
-                self._build_dict_from_xml(new_dict , c , strip_NS)
+                self._build_dict_from_xml(new_dict, c, strip_NS)
         else:
             # handle multiple tags with the same name by creating and 
             # appending to a list
             if el.text:
                 new_dict['TEXT'] = el.text
-            if isinstance(d[tag] , list):
+            if isinstance(d[tag], list):
                 #d[tag].append(el.text)
                 d[tag].append(new_dict)
             else:
                 # By defaul, the value will be a string
                 d[tag] = new_dict
 
-    def _strip_NS(self , tag):
+    def _strip_NS(self, tag):
         """
         Strips off the namespace tag prefix
         """
-        return self.strip_NS_re.sub('' , tag)
+        return self.strip_NS_re.sub('', tag)

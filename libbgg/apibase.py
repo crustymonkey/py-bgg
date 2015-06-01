@@ -1,9 +1,9 @@
 
 from .infodict import InfoDict
-import urllib2 , urllib
+import urllib2, urllib, time
 
 class BGGBase(object):
-    def __init__(self , url_base='http://www.boardgamegeek.com' , 
+    def __init__(self, url_base='http://www.boardgamegeek.com', 
             path_base=''):
         """
         Set up the basic url stuff for retrieving items via the api
@@ -13,7 +13,7 @@ class BGGBase(object):
         """
         self.url_base = url_base.rstrip('/')
         self.path_base = path_base.strip('/')
-        self._base = '%s/%s' % (self.url_base , self.path_base)
+        self._base = '%s/%s' % (self.url_base, self.path_base)
         self._base = self._base.rstrip('/')
         self._opener = self._get_opener()
 
@@ -25,9 +25,12 @@ class BGGBase(object):
         o = urllib2.build_opener()
         return o
     
-    def call(self , call_type , call_dict):
-        url = '%s/%s?%s' % (self._base , urllib.quote(call_type) , 
+    def call(self, call_type, call_dict, wait=False):
+        url = '%s/%s?%s' % (self._base, urllib.quote(call_type), 
             urllib.urlencode(call_dict))
         res = self._opener.open(url)
         resp_str = res.read()
+        if wait and res.code == 202:
+            time.sleep(1)
+            return self.call(call_type, call_dict, wait)
         return InfoDict.xml_to_info_dict(resp_str)
