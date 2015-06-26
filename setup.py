@@ -20,7 +20,7 @@ along with py-sonic.  If not, see <http://www.gnu.org/licenses/>
 from distutils.core import setup
 
 setup(name='py-bgg' ,
-    version='0.1.1' ,
+    version='0.1.2' ,
     author='Jay Deiman' ,
     author_email='admin@splitstreams.com' ,
     url='http://stuffivelearned.org' ,

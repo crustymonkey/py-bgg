@@ -36,9 +36,9 @@ class BGG(BGGBase):
         d = {'id': fid, 'type': ftype}
         return self.call('family', d)
 
-    def _things(self, bid, ttype=None, versions=True, videos=True,
-            stats=True, historical=True, marketplace=True, comments=True,
-            ratingcomments=True, page=1, pagesize=50):
+    def _things(self, bid, ttype=None, versions=False, videos=False,
+            stats=False, historical=False, marketplace=False, comments=False,
+            ratingcomments=False, page=1, pagesize=50):
         """
         This handles all the calls for "things" as defined by the
         BGG API: http://boardgamegeek.com/wiki/page/BGG_XML_API2
