@@ -24,7 +24,7 @@ You can also install directly using *pip* or *easy_install*
 This follows the BGG api pretty closely so this should be self-explanatory
 with "pydoc libbgg" and the api definition at:
 
-http://boardgamegeek.com/wiki/page/BGG_XML_API
+http://boardgamegeek.com/wiki/page/BGG_XML_API  
 http://boardgamegeek.com/wiki/page/BGG_XML_API2
 
 ## BASIC TUTORIAL ##
