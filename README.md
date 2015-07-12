@@ -4,6 +4,8 @@ A simple Board Game Geek (boardgamegeek.com) API library in Python.
 This mainly just handles the API calls and converts the XML to 
 representative dict/list format
 
+UPDATE: This is now feature complete for version 2 of the BGG API!
+
 ## INSTALL ##
 
 Installation is pretty easy.  You can just to the standard as root:
@@ -15,6 +17,7 @@ Installation is pretty easy.  You can just to the standard as root:
 You can also install directly using *pip* or *easy_install*
     
     pip install py-bgg
+    easy_install py-bgg
 
 ## USAGE ##
 
@@ -22,6 +25,7 @@ This follows the BGG api pretty closely so this should be self-explanatory
 with "pydoc libbgg" and the api definition at:
 
 http://boardgamegeek.com/wiki/page/BGG_XML_API
+http://boardgamegeek.com/wiki/page/BGG_XML_API2
 
 ## BASIC TUTORIAL ##
 
@@ -53,8 +57,3 @@ for game in results['boardgames']['boardgame']:
 results = conn.get_game(136888 , stats=True)
 print json.dumps(results , indent=4 , sort_keys=True)
 ```
-
-## TODO ##
-
-Add APIv2 support (which, at the time of this writing, is still in beta)
-
