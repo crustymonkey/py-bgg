@@ -26,6 +26,26 @@ class BGGBase(object):
         return o
     
     def call(self, call_type, call_dict, wait=False):
+        """
+        This handles all of the actual calls to the bgg api.  It takes the
+        first portion of the url and appends it to the base, then builds
+        the query string from the call_dict after filtering None values.
+
+        call_type:str       The path addition to append to the base url
+        call_dict:dict      This is a dictionary mapping to be turned into
+                            a query string
+        wait:bool           This will cause the api to retry if a 202 is
+                            returned until a 200 is returned.  This is
+                            needed for the async calls for get_collection()
+
+        returns InfoDict    Returns a mapping of items from the native XML
+                            to a dictionary mapping
+        """
+        # First, filter any None values from the list
+        for key, val in call_dict.items():
+            if val is None:
+                del call_dict[key]
+
         url = '%s/%s?%s' % (self._base, urllib.quote(call_type), 
             urllib.urlencode(call_dict))
         res = self._opener.open(url)
