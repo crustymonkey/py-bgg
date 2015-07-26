@@ -18,30 +18,31 @@ along with py-sonic.  If not, see <http://www.gnu.org/licenses/>
 """
 
 from distutils.core import setup
+from libbgg import __version__
 
-setup(name='py-bgg' ,
-    version='0.2.0' ,
-    author='Jay Deiman' ,
-    author_email='admin@splitstreams.com' ,
-    url='http://stuffivelearned.org' ,
-    description='A simple Board Game Geek (boardgamegeek.com) API library' ,
+setup(name='py-bgg',
+    version=__version__,
+    author='Jay Deiman',
+    author_email='admin@splitstreams.com',
+    url='http://stuffivelearned.org',
+    description='A simple Board Game Geek (boardgamegeek.com) API library',
     long_description='A simple Board Game Geek (boardgamegeek.com) API '
         'library in Python. This mainly just handles the API calls '
-        'and converts the XML to representative dict/list format' ,
-    packages=['libbgg'] ,
-    package_dir={'libbgg': 'libbgg'} ,
+        'and converts the XML to representative dict/list format',
+    packages=['libbgg'],
+    package_dir={'libbgg': 'libbgg'},
     classifiers=[
-        'Development Status :: 4 - Beta' ,
-        'Intended Audience :: System Administrators' ,
-        'Intended Audience :: Information Technology' ,
-        'License :: OSI Approved :: GNU General Public License (GPL)' ,
-        'Natural Language :: English' ,
-        'Operating System :: POSIX' ,
-        'Programming Language :: Python' ,
-        'Topic :: System :: Systems Administration' ,
-        'Topic :: Internet :: WWW/HTTP' ,
-        'Topic :: Software Development :: Libraries :: Python Modules' ,
-        'Topic :: Software Development :: Libraries' ,
-        'Topic :: System' ,
+        'Development Status :: 4 - Beta',
+        'Intended Audience :: System Administrators',
+        'Intended Audience :: Information Technology',
+        'License :: OSI Approved :: GNU General Public License (GPL)',
+        'Natural Language :: English',
+        'Operating System :: POSIX',
+        'Programming Language :: Python',
+        'Topic :: System :: Systems Administration',
+        'Topic :: Internet :: WWW/HTTP',
+        'Topic :: Software Development :: Libraries :: Python Modules',
+        'Topic :: Software Development :: Libraries',
+        'Topic :: System',
     ]
 )
