@@ -42,6 +42,7 @@ class BGG(BGGBase):
     guild_sorts = ('username', 'date')
     play_types = ('thing', 'family')
     play_subtypes = ('boardgame', 'boardgameexpansion', 'videogame', 'rpgitem')
+    search_types = play_subtypes
     hot_types = ('boardgame', 'rpg', 'videogame', 'boardgameperson',
         'rpgperson', 'boardgamecompany', 'rpgcompany', 'videogamecompany')
 
@@ -103,13 +104,20 @@ class BGG(BGGBase):
         matches will be returned
         
         search_str:str          The string to search for
-        qtype:str               One of the "things"
+        qtype:str|list[str]     One of the "things"
         exact:bool              Match the string exactly
         """
-        if qtype not in self.things:
-            raise InvalidInputError('The qtype must be one of %r' % 
-                self.things)
-        d = { 'query': search_str, 'type': qtype, 'exact': int(exact) }
+        if not isinstance(qtype, (list, tuple)):
+            qtype = [qtype]
+
+        invalid_types = set(qtype) - set(self.search_types)
+        if invalid_types:
+            raise InvalidInputError('The qtypes must be one of {}, invalid '
+                'item(s) submitted: ({})'.format(self.search_types,
+                ', '.join(invalid_types)))
+
+        d = { 'query': search_str, 'type': ','.join(qtype),
+            'exact': int(exact) }
         return self.call('search', d)
 
     def get_collection(self, username, wait=True, **kwargs):
