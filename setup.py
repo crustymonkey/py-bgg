@@ -20,15 +20,16 @@ along with py-sonic.  If not, see <http://www.gnu.org/licenses/>
 from distutils.core import setup
 from libbgg import __version__
 
-setup(name='py-bgg',
+setup(name='py-bgg-3',
     version=__version__,
     author='Jay Deiman',
     author_email='admin@splitstreams.com',
     url='http://stuffivelearned.org',
     description='A simple Board Game Geek (boardgamegeek.com) API library',
     long_description='A simple Board Game Geek (boardgamegeek.com) API '
-        'library in Python. This mainly just handles the API calls '
-        'and converts the XML to representative dict/list format',
+        'library in Python, specifically with Python3. This mainly just '
+        'handles the API calls and converts the XML to representative '
+        'dict/list format',
     packages=['libbgg'],
     package_dir={'libbgg': 'libbgg'},
     classifiers=[
