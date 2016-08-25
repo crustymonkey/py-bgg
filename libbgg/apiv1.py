@@ -35,7 +35,7 @@ class BGG(BGGBase):
         historical_start:datetime.date      The start date for historical stats
         historical_end:datetime.date        The end date for historical stats
         """
-        if isinstance(game_ids, (basestring, int)):
+        if isinstance(game_ids, (str, int)):
             game_ids = [ int(game_ids) ]
         else:
             game_ids = [ int(gid) for gid in game_ids ]
