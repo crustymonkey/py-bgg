@@ -17,8 +17,13 @@ You should have received a copy of the GNU General Public License
 along with py-sonic.  If not, see <http://www.gnu.org/licenses/>
 """
 
-from distutils.core import setup
+from setuptools import setup
 from libbgg import __version__
+import os
+
+req_file = os.path.join(os.dirname(__file__), 'requirements.txt')
+
+requirements = open(req_file).readlines()
 
 setup(name='py-bgg',
     version=__version__,
@@ -31,6 +36,7 @@ setup(name='py-bgg',
         'and converts the XML to representative dict/list format',
     packages=['libbgg'],
     package_dir={'libbgg': 'libbgg'},
+    install_requires=requirements,
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: System Administrators',

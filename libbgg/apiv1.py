@@ -1,7 +1,13 @@
 
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+
 from libbgg.apibase import BGGBase
 from libbgg.errors import InvalidInputError
 from datetime import date
+import six
 
 class BGG(BGGBase):
     def __init__(self, url_base='http://www.boardgamegeek.com', 
@@ -35,7 +41,7 @@ class BGG(BGGBase):
         historical_start:datetime.date      The start date for historical stats
         historical_end:datetime.date        The end date for historical stats
         """
-        if isinstance(game_ids, (basestring, int)):
+        if isinstance(game_ids, (six.string_types, int)):
             game_ids = [ int(game_ids) ]
         else:
             game_ids = [ int(gid) for gid in game_ids ]
@@ -81,7 +87,7 @@ class BGG(BGGBase):
         """
         # All the option values in the kwargs should have integer values
         # so set them as such
-        for key, val in kwargs.items():
+        for key, val in list(kwargs.items()):
             kwargs[key] = int(val)
         return self.call('collection/%s' % username, kwargs, wait)
 

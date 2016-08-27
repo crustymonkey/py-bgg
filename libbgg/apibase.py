@@ -1,6 +1,12 @@
 
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+
 from .infodict import InfoDict
-import urllib2, urllib, time
+from six.moves import urllib
+import time
 
 class BGGBase(object):
     def __init__(self, url_base='http://www.boardgamegeek.com', 
@@ -22,7 +28,7 @@ class BGGBase(object):
         This returns a basic opener.  If auth is ever needed, this is the
         place it would be implemented
         """
-        o = urllib2.build_opener()
+        o = urllib.request.build_opener()
         return o
     
     def call(self, call_type, call_dict, wait=False):
@@ -42,12 +48,12 @@ class BGGBase(object):
                             to a dictionary mapping
         """
         # First, filter any None values from the list
-        for key, val in call_dict.items():
+        for key, val in list(call_dict.items()):
             if val is None:
                 del call_dict[key]
 
-        url = '%s/%s?%s' % (self._base, urllib.quote(call_type), 
-            urllib.urlencode(call_dict))
+        url = '%s/%s?%s' % (self._base, urllib.parse.quote(call_type), 
+            urllib.parse.urlencode(call_dict))
         res = self._opener.open(url)
         resp_str = res.read()
         if wait and res.code == 202:
