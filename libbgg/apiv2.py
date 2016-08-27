@@ -141,7 +141,7 @@ class BGG(BGGBase):
         """
         # All the option values in the kwargs should have integer values
         # so set them as such
-        for key, val in kwargs.items():
+        for key, val in list(kwargs.items()):
             try:
                 kwargs[key] = int(val)
             except:
