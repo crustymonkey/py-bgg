@@ -21,7 +21,7 @@ from setuptools import setup
 from libbgg import __version__
 import os
 
-req_file = os.path.join(os.dirname(__file__), 'requirements.txt')
+req_file = os.path.join(os.path.dirname(__file__), 'requirements.txt')
 
 requirements = open(req_file).readlines()
 
