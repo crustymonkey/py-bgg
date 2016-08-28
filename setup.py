@@ -19,11 +19,6 @@ along with py-sonic.  If not, see <http://www.gnu.org/licenses/>
 
 from setuptools import setup
 from libbgg import __version__
-import os
-
-req_file = os.path.join(os.path.dirname(__file__), 'requirements.txt')
-
-requirements = open(req_file).readlines()
 
 setup(name='py-bgg',
     version=__version__,
@@ -36,7 +31,7 @@ setup(name='py-bgg',
         'and converts the XML to representative dict/list format',
     packages=['libbgg'],
     package_dir={'libbgg': 'libbgg'},
-    install_requires=requirements,
+    install_requires=['six>=1.9.0'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: System Administrators',
