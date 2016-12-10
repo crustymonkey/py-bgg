@@ -165,7 +165,7 @@ class BGG(BGGBase):
             raise InvalidInputError('Forum type must be either "thing" or '
                 '"family"')
         d = {
-            'id': int(gid),
+            'id': int(fid),
             'type': ftype,
         }
 
