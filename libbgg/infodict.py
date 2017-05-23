@@ -45,16 +45,22 @@ class InfoDict(dict):
         return self[name]
 
     @classmethod
-    def xml_to_info_dict(cls, xml, strip_NS=True):
+    def xml_to_info_dict(cls, xml, strip_NS=True, strip_errors=False):
         """
         Return an InfoDict which contains the xml tree
 
         xml:str         The xml string to convert
         stripNS:bool    If True, the namespace prefix will be stripped
                         from the tags (keys) default: True
+        strip_errors:bool   Attempt to remove characters causing parse errors
+                            from the xml
         """
         d = cls()
-        root = ET.fromstring(xml.strip())
+        xml = xml.strip()
+        if strip_errors:
+            root = InfoDict._get_root(xml)
+        else:
+            root = ET.fromstring(xml, parser)
         d._build_dict_from_xml(d, root, strip_NS)
         return d
 
@@ -106,3 +112,25 @@ class InfoDict(dict):
         Strips off the namespace tag prefix
         """
         return self.strip_NS_re.sub('', tag)
+
+    @classmethod
+    def _get_root(cls, xml):
+        if isinstance(xml, bytes):
+            lines = xml.decode('utf-8', errors='ignore').split('\n')
+        else:
+            lines = xml.split('\n')
+        try:
+            root = ET.fromstring(xml)
+        except ET.ParseError as e:
+            # This is a little hacky, but it works for now
+            # TODO: Look at subclassing XMLParser and handling this in
+            # there instead.
+            line_num, char_num = e.position
+            line_idx = line_num - 1
+            lines[line_idx] = lines[line_idx].replace(
+                lines[line_idx][char_num],
+                '',
+            )
+            return InfoDict._get_root('\n'.join(lines))
+
+        return root

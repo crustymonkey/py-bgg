@@ -59,4 +59,4 @@ class BGGBase(object):
         if wait and res.code == 202:
             time.sleep(1)
             return self.call(call_type, call_dict, wait)
-        return InfoDict.xml_to_info_dict(resp_str)
+        return InfoDict.xml_to_info_dict(resp_str, strip_errors=True)
