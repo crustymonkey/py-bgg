@@ -98,7 +98,7 @@ class InfoDict(dict):
         else:
             # handle multiple tags with the same name by creating and 
             # appending to a list
-            if el.text:
+            if el.text and el.text.strip():
                 new_dict['TEXT'] = el.text
             if isinstance(d[tag], list):
                 #d[tag].append(el.text)
