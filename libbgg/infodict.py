@@ -1,9 +1,4 @@
 
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
-
 import xml.etree.ElementTree as ET
 import re
 
@@ -57,11 +52,14 @@ class InfoDict(dict):
         """
         d = cls()
         xml = xml.strip()
+
         if strip_errors:
             root = InfoDict._get_root(xml)
         else:
             root = ET.fromstring(xml, parser)
+
         d._build_dict_from_xml(d, root, strip_NS)
+
         return d
 
     def _build_dict_from_xml(self, d, el, strip_NS):
@@ -76,9 +74,12 @@ class InfoDict(dict):
                         tags
         """
         children = el.getchildren()
+
         if strip_NS:
             tag = self._strip_NS(el.tag)
+
         new_dict = InfoDict(el.attrib)
+
         if tag in d:
             if not isinstance(d[tag], list):
                 # Handle multiple entries at the same level
@@ -87,12 +88,14 @@ class InfoDict(dict):
         else:
             # Instantiate this otherwise
             d[tag] = None
+
         if children:
             # We have children
             if isinstance(d[tag], list):
                 d[tag].append(new_dict)
             else:
                 d[tag] = new_dict
+
             for c in children:
                 self._build_dict_from_xml(new_dict, c, strip_NS)
         else:
@@ -100,8 +103,8 @@ class InfoDict(dict):
             # appending to a list
             if el.text and el.text.strip():
                 new_dict['TEXT'] = el.text
+
             if isinstance(d[tag], list):
-                #d[tag].append(el.text)
                 d[tag].append(new_dict)
             else:
                 # By defaul, the value will be a string

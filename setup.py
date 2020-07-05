@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 """
 This file is part of py-sonic.
@@ -31,7 +31,6 @@ setup(name='py-bgg',
         'and converts the XML to representative dict/list format',
     packages=['libbgg'],
     package_dir={'libbgg': 'libbgg'},
-    install_requires=['six>=1.9.0'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: System Administrators',

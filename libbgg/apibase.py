@@ -1,11 +1,7 @@
 
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
-
-from .infodict import InfoDict
-from six.moves import urllib
+from libbgg.infodict import InfoDict
+from urllib.request import build_opener
+from urllib.parse import urlencode, quote
 import time
 
 class BGGBase(object):
@@ -19,7 +15,7 @@ class BGGBase(object):
         """
         self.url_base = url_base.rstrip('/')
         self.path_base = path_base.strip('/')
-        self._base = '%s/%s' % (self.url_base, self.path_base)
+        self._base = '{}/{}'.format(self.url_base, self.path_base)
         self._base = self._base.rstrip('/')
         self._opener = self._get_opener()
 
@@ -28,7 +24,7 @@ class BGGBase(object):
         This returns a basic opener.  If auth is ever needed, this is the
         place it would be implemented
         """
-        o = urllib.request.build_opener()
+        o = build_opener()
         return o
     
     def call(self, call_type, call_dict, wait=False):
@@ -52,11 +48,16 @@ class BGGBase(object):
             if val is None:
                 del call_dict[key]
 
-        url = '%s/%s?%s' % (self._base, urllib.parse.quote(call_type), 
-            urllib.parse.urlencode(call_dict))
+        url = '{}/{}?{}'.format(
+            self._base,
+            quote(call_type), 
+            urlencode(call_dict),
+        )
         res = self._opener.open(url)
         resp_str = res.read()
+
         if wait and res.code == 202:
             time.sleep(1)
             return self.call(call_type, call_dict, wait)
+
         return InfoDict.xml_to_info_dict(resp_str, strip_errors=True)

@@ -4,7 +4,7 @@ A simple Board Game Geek (boardgamegeek.com) API library in Python.
 This mainly just handles the API calls and converts the XML to 
 representative dict/list format
 
-UPDATE: This is now feature complete for version 2 of the BGG API!
+**0.3.0 has moved to Python3 ONLY**.  Python2 is dead, long live Python2.
 
 ## INSTALL ##
 
@@ -14,10 +14,9 @@ Installation is pretty easy.  You can just to the standard as root:
     cd py-bgg-*
     python setup.py install
 
-You can also install directly using *pip* or *easy_install*
+You can also install directly using `pip`
     
     pip install py-bgg
-    easy_install py-bgg
 
 ## USAGE ##
 
@@ -34,26 +33,28 @@ subsequently return a dict/list tree of objects that are accessible via
 standard object notation or dictionary style access
 
 ```python
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import json
 from libbgg.apiv1 import BGG
+# You can also use version 2 of the api:
+from libbgg.apiv2 import BGG as BGG2
 
 conn = BGG()
 
 # Perform a search
 results = conn.search('bruges')
-print json.dumps(results , indent=4 , sort_keys=True)
+print(json.dumps(results, indent=4, sort_keys=True))
 
 # Print out a list of names that were returned
 for game in results.boardgames.boardgame:
-    print game.name.TEXT
+    print(game.name.TEXT)
 
 # You can also access items as a dictionary
 for game in results['boardgames']['boardgame']:
-    print game['name']['TEXT']
+    print(game['name']['TEXT'])
 
 # Get game info
 results = conn.get_game(136888 , stats=True)
-print json.dumps(results , indent=4 , sort_keys=True)
+print(json.dumps(results, indent=4, sort_keys=True))
 ```

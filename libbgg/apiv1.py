@@ -1,9 +1,4 @@
 
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
-
 from libbgg.apibase import BGGBase
 from libbgg.errors import InvalidInputError
 from datetime import date
@@ -22,7 +17,8 @@ class BGG(BGGBase):
         search_str:str          The string to search for
         exact:bool              Match the string exactly
         """
-        d = { 'search': search_str, 'exact': int(exact) }
+        d = {'search': search_str, 'exact': int(exact)}
+
         return self.call('search', d)
 
     def get_game(self, game_ids=None, comments=False, comments_page=1,
@@ -41,30 +37,36 @@ class BGG(BGGBase):
         historical_start:datetime.date      The start date for historical stats
         historical_end:datetime.date        The end date for historical stats
         """
-        if isinstance(game_ids, (six.string_types, int)):
-            game_ids = [ int(game_ids) ]
+        if isinstance(game_ids, (str, int)):
+            game_ids = [int(game_ids)]
         else:
-            game_ids = [ int(gid) for gid in game_ids ]
-        d = { 'stats': int(stats) }
+            game_ids = [int(gid) for gid in game_ids]
+
+        d = {'stats': int(stats)}
+
         if comments:
             # Set the comments options
             d['comments'] = 1
             d['comments_page'] = comments_page
+
         if historical:
             # Set the historical options
             d['historical'] = 1
+
             if isinstance(historical_start, date):
                 d['from'] = str(historical_start)
             elif historical_start is not None:
                 raise InvalidInputError('"historical_start" must be of type '
-                    'datetime.date, not %s' % type(historical_start))
+                    'datetime.date, not {}'.format(type(historical_start)))
+
             if isinstance(historical_end, date):
                 d['to'] = str(historical_end)
             elif historical_end is not None:
                 raise InvalidInputError('"historical_end" must be of type '
-                    'datetime.date, not %s' % type(historical_end))
-        return self.call('boardgame/%s' % ','.join(
-            [ str(gid) for gid in game_ids ]), d)
+                    'datetime.date, not {}'.format(type(historical_end)))
+
+        return self.call('boardgame/{}'.format(
+            ','.join([str(gid) for gid in game_ids]), d))
 
     def get_collection(self, username, wait=True, **kwargs):
         """
@@ -87,8 +89,9 @@ class BGG(BGGBase):
         """
         # All the option values in the kwargs should have integer values
         # so set them as such
-        for key, val in list(kwargs.items()):
+        for key, val in kwargs.items():
             kwargs[key] = int(val)
+
         return self.call('collection/%s' % username, kwargs, wait)
 
     def get_thread_messages(self, thr_id, start=0, count=100, 
@@ -103,13 +106,13 @@ class BGG(BGGBase):
         username:str        The username to filter for
         """
         thr_id = int(thr_id)
-        d = { 'start': int(start), 'count': int(count) }
+        d = {'start': int(start), 'count': int(count)}
         if d['count'] > 100:
             raise InvalidInputError('The maximum value for "count" is 100, and '
-                'you requested %s' % count)
+                'you requested {}'.format(count))
         if username is not None:
             d['username'] = username
-        return self.call('thread/%s' % thr_id, d)
+        return self.call('thread/{}'.format(thr_id, d))
 
     def get_geeklist(self, list_id, comments=False):
         """
@@ -119,5 +122,5 @@ class BGG(BGGBase):
         comments:bool       If set to True, will also retrieve the comments
         """
         list_id = int(list_id)
-        d = { 'comments': int(comments) }
-        return self.call('geeklist/%s' % list_id, d)
+        d = {'comments': int(comments)}
+        return self.call('geeklist/{}'.format(list_id), d)
