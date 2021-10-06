@@ -73,7 +73,7 @@ class InfoDict(dict):
         stripNS:bool    If this is True, the namespace will be stripped from
                         tags
         """
-        children = el.getchildren()
+        children = list(el)
 
         if strip_NS:
             tag = self._strip_NS(el.tag)
