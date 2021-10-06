@@ -65,8 +65,7 @@ class BGG(BGGBase):
                 raise InvalidInputError('"historical_end" must be of type '
                     'datetime.date, not {}'.format(type(historical_end)))
 
-        return self.call('boardgame/{}'.format(
-            ','.join([str(gid) for gid in game_ids]), d))
+        return self.call(f"boardgame/{','.join([str(gid) for gid in game_ids])}",d)
 
     def get_collection(self, username, wait=True, **kwargs):
         """
