@@ -57,4 +57,9 @@ for game in results['boardgames']['boardgame']:
 # Get game info
 results = conn.get_game(136888 , stats=True)
 print(json.dumps(results, indent=4, sort_keys=True))
+
+# V2
+conn2 = BGG2()
+results = conn.boardgame(136888, stats=True)
+print(json.dumps(results, indent=4, sort_keys=True))
 ```

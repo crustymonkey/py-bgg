@@ -66,7 +66,7 @@ class BGG(BGGBase):
                     'datetime.date, not {}'.format(type(historical_end)))
 
         return self.call('boardgame/{}'.format(
-            ','.join([str(gid) for gid in game_ids]), d))
+            ','.join([str(gid) for gid in game_ids])), d)
 
     def get_collection(self, username, wait=True, **kwargs):
         """
