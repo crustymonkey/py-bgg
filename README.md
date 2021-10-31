@@ -60,6 +60,6 @@ print(json.dumps(results, indent=4, sort_keys=True))
 
 # V2
 conn2 = BGG2()
-results = conn.boardgame(136888, stats=True)
+results = conn2.boardgame(136888, stats=True)
 print(json.dumps(results, indent=4, sort_keys=True))
 ```
