@@ -2,7 +2,6 @@
 from libbgg.apibase import BGGBase
 from libbgg.errors import InvalidInputError
 from datetime import date
-import six
 
 class BGG(BGGBase):
     def __init__(self, url_base='http://www.boardgamegeek.com', 
