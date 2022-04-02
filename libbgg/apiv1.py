@@ -35,6 +35,8 @@ class BGG(BGGBase):
         historical:bool     Include historical game stats
         historical_start:datetime.date      The start date for historical stats
         historical_end:datetime.date        The end date for historical stats
+        marketplace:bool    Also return the marketplace information for the
+                            game
         """
         if isinstance(game_ids, (str, int)):
             game_ids = [int(game_ids)]
@@ -64,9 +66,8 @@ class BGG(BGGBase):
                 raise InvalidInputError('"historical_end" must be of type '
                     'datetime.date, not {}'.format(type(historical_end)))
 
-        if marketplace:
-            # retrieve marketplace data
-            d['marketplace'] = 1
+        # retrieve marketplace data if specified
+        d['marketplace'] = int(marketplace)
 
         return self.call('boardgame/{}'.format(
             ','.join([str(gid) for gid in game_ids])), d)
