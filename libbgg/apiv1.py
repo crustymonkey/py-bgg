@@ -4,7 +4,7 @@ from libbgg.errors import InvalidInputError
 from datetime import date
 
 class BGG(BGGBase):
-    def __init__(self, url_base='http://www.boardgamegeek.com', 
+    def __init__(self, url_base='http://www.boardgamegeek.com',
             path_base='xmlapi'):
         super(BGG, self).__init__(url_base, path_base)
 
@@ -12,7 +12,7 @@ class BGG(BGGBase):
         """
         Search for board games by string.  If exact is true, only exact
         matches will be returned
-        
+
         search_str:str          The string to search for
         exact:bool              Match the string exactly
         """
@@ -21,8 +21,8 @@ class BGG(BGGBase):
         return self.call('search', d)
 
     def get_game(self, game_ids=None, comments=False, comments_page=1,
-            stats=False, historical=False, historical_start=None, 
-            historical_end=None):
+            stats=False, historical=False, historical_start=None,
+            historical_end=None, marketplace=False):
         """
         Gets info on a particular game or games.  game_ids can be either
         an integer id, a string id ("12345"), or an iterable of ids.
@@ -64,16 +64,19 @@ class BGG(BGGBase):
                 raise InvalidInputError('"historical_end" must be of type '
                     'datetime.date, not {}'.format(type(historical_end)))
 
+        if marketplace:
+            # retrieve marketplace data
+            d['marketplace'] = 1
+
         return self.call('boardgame/{}'.format(
             ','.join([str(gid) for gid in game_ids])), d)
 
     def get_collection(self, username, wait=True, **kwargs):
-        """
-        This will retrieve a user's collection, with optional flags set.
+        """ This will retrieve a user's collection, with optional flags set.
         There are just too many options here to have individual options
         listed here.  You can specify any of the options in your call
-        like so: 
-        
+        like so:
+
         obj.get_collection('username', own=1, played=1)
 
         All the options are listed on the documentation page for the API
@@ -93,7 +96,7 @@ class BGG(BGGBase):
 
         return self.call('collection/%s' % username, kwargs, wait)
 
-    def get_thread_messages(self, thr_id, start=0, count=100, 
+    def get_thread_messages(self, thr_id, start=0, count=100,
             username=None):
         """
         Gets messages from a forum/game thread.
