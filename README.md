@@ -62,4 +62,13 @@ print(json.dumps(results, indent=4, sort_keys=True))
 conn2 = BGG2()
 results = conn2.boardgame(136888, stats=True)
 print(json.dumps(results, indent=4, sort_keys=True))
+
+# Batch gets with a list, tuple, or comma separated str
+conn2 = BGG2()
+
+results = conn2.boardgame((136888, 136889), stats=True)
+# or
+results = conn2.boardgame("136888,136889", stats=True)
+
+print(json.dumps(results, indent=4, sort_keys=True))
 ```
