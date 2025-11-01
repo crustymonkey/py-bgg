@@ -4,9 +4,9 @@ from unittest import (
 )
 from unittest.mock import MagicMock
 
-
 from libbgg.apibase import BGGBase
 from libbgg.tests.fixtures import bgg_boardgame_response
+
 
 class TestBGGBase(TestCase):
 
