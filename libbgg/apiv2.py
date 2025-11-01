@@ -46,10 +46,11 @@ class BGG(BGGBase):
     hot_types = ('boardgame', 'rpg', 'videogame', 'boardgameperson',
         'rpgperson', 'boardgamecompany', 'rpgcompany', 'videogamecompany')
 
-    def __init__(self, url_base='http://www.boardgamegeek.com', 
+    def __init__(self, api_token, url_base='http://www.boardgamegeek.com', 
             path_base='xmlapi2'):
-        super(BGG, self).__init__(url_base, path_base)
+        super(BGG, self).__init__(api_token, url_base, path_base)
         self._last_called = None
+        self.api_token = api_token
 
     def __getattr__(self, name):
         """

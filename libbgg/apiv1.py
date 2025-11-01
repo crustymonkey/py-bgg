@@ -4,9 +4,9 @@ from libbgg.errors import InvalidInputError
 from datetime import date
 
 class BGG(BGGBase):
-    def __init__(self, url_base='http://www.boardgamegeek.com',
+    def __init__(self, api_token, url_base='http://www.boardgamegeek.com',
             path_base='xmlapi'):
-        super(BGG, self).__init__(url_base, path_base)
+        super(BGG, self).__init__(api_token, url_base, path_base)
 
     def search(self, search_str, exact=False):
         """

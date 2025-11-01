@@ -5,14 +5,19 @@ from urllib.parse import urlencode, quote
 import time
 
 class BGGBase(object):
-    def __init__(self, url_base='http://www.boardgamegeek.com', 
+
+    def __init__(self, api_token, url_base='http://www.boardgamegeek.com', 
             path_base=''):
         """
         Set up the basic url stuff for retrieving items via the api
         
+        api_token:str       required API auth token
+                            BGG now requires an API auth token as of Fall 2025
+                            https://boardgamegeek.com/using_the_xml_api#toc10
         url_base:str        The base url, including the http:// portion
         path_base:str       The base portion of the uri
         """
+        self.api_token = api_token
         self.url_base = url_base.rstrip('/')
         self.path_base = path_base.strip('/')
         self._base = '{}/{}'.format(self.url_base, self.path_base)
