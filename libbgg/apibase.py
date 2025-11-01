@@ -1,6 +1,9 @@
 
 from libbgg.infodict import InfoDict
-from urllib.request import build_opener
+from urllib.request import (
+    build_opener,
+    install_opener,
+)
 from urllib.parse import urlencode, quote
 import time
 
@@ -30,6 +33,9 @@ class BGGBase(object):
         place it would be implemented
         """
         o = build_opener()
+        o.addheaders = [('Authorization', f'Bearer {self.api_token}')]
+        # add this opener to all future requests
+        install_opener(o)
         return o
     
     def call(self, call_type, call_dict, wait=False):
