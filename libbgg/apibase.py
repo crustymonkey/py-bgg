@@ -1,18 +1,26 @@
 
 from libbgg.infodict import InfoDict
-from urllib.request import build_opener
+from urllib.request import (
+    build_opener,
+    install_opener,
+)
 from urllib.parse import urlencode, quote
 import time
 
 class BGGBase(object):
-    def __init__(self, url_base='http://www.boardgamegeek.com', 
+
+    def __init__(self, api_token, url_base='http://www.boardgamegeek.com', 
             path_base=''):
         """
         Set up the basic url stuff for retrieving items via the api
         
+        api_token:str       required API auth token
+                            BGG now requires an API auth token as of Fall 2025
+                            https://boardgamegeek.com/using_the_xml_api#toc10
         url_base:str        The base url, including the http:// portion
         path_base:str       The base portion of the uri
         """
+        self.api_token = api_token
         self.url_base = url_base.rstrip('/')
         self.path_base = path_base.strip('/')
         self._base = '{}/{}'.format(self.url_base, self.path_base)
@@ -25,6 +33,9 @@ class BGGBase(object):
         place it would be implemented
         """
         o = build_opener()
+        o.addheaders = [('Authorization', f'Bearer {self.api_token}')]
+        # add this opener to all future requests
+        install_opener(o)
         return o
     
     def call(self, call_type, call_dict, wait=False):

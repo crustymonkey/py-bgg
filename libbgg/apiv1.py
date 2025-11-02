@@ -4,9 +4,9 @@ from libbgg.errors import InvalidInputError
 from datetime import date
 
 class BGG(BGGBase):
-    def __init__(self, url_base='http://www.boardgamegeek.com',
+    def __init__(self, api_token, url_base='http://www.boardgamegeek.com',
             path_base='xmlapi'):
-        super(BGG, self).__init__(url_base, path_base)
+        super(BGG, self).__init__(api_token, url_base, path_base)
 
     def search(self, search_str, exact=False):
         """
@@ -69,8 +69,9 @@ class BGG(BGGBase):
         # retrieve marketplace data if specified
         d['marketplace'] = int(marketplace)
 
-        return self.call('boardgame/{}'.format(
-            ','.join([str(gid) for gid in game_ids])), d)
+        return self.call(
+            'boardgame/{}'.format(','.join([str(gid) for gid in game_ids])), d
+        )
 
     def get_collection(self, username, wait=True, **kwargs):
         """ This will retrieve a user's collection, with optional flags set.
