@@ -1,7 +1,7 @@
 # py-bgg #
 
-A simple Board Game Geek (boardgamegeek.com) API library in Python.  
-This mainly just handles the API calls and converts the XML to 
+A simple Board Game Geek (boardgamegeek.com) API library in Python.
+This mainly just handles the API calls and converts the XML to
 representative dict/list format
 
 **0.3.0 has moved to Python3 ONLY**.  Python2 is dead, long live Python2.
@@ -15,7 +15,7 @@ Installation is pretty easy.  You can just to the standard as root:
     python setup.py install
 
 You can also install directly using `pip`
-    
+
     pip install py-bgg
 
 ## USAGE ##
@@ -23,7 +23,7 @@ You can also install directly using `pip`
 This follows the BGG api pretty closely so this should be self-explanatory
 with "pydoc libbgg" and the api definition at:
 
-http://boardgamegeek.com/wiki/page/BGG_XML_API  
+http://boardgamegeek.com/wiki/page/BGG_XML_API
 http://boardgamegeek.com/wiki/page/BGG_XML_API2
 
 ## BASIC TUTORIAL ##
@@ -40,7 +40,9 @@ from libbgg.apiv1 import BGG
 # You can also use version 2 of the api:
 from libbgg.apiv2 import BGG as BGG2
 
-conn = BGG()
+API_KEY = 'abc123'
+
+conn = BGG(API_KEY)
 
 # Perform a search
 results = conn.search('bruges')
@@ -59,12 +61,12 @@ results = conn.get_game(136888 , stats=True)
 print(json.dumps(results, indent=4, sort_keys=True))
 
 # V2
-conn2 = BGG2()
+conn2 = BGG2(API_KEY)
 results = conn2.boardgame(136888, stats=True)
 print(json.dumps(results, indent=4, sort_keys=True))
 
 # Batch gets with a list, tuple, or comma separated str
-conn2 = BGG2()
+conn2 = BGG2(API_KEY)
 
 results = conn2.boardgame((136888, 136889), stats=True)
 # or

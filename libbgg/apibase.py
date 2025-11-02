@@ -13,7 +13,7 @@ class BGGBase(object):
             path_base=''):
         """
         Set up the basic url stuff for retrieving items via the api
-        
+
         api_token:str       required API auth token
                             BGG now requires an API auth token as of Fall 2025
                             https://boardgamegeek.com/using_the_xml_api#toc10
@@ -24,20 +24,18 @@ class BGGBase(object):
         self.url_base = url_base.rstrip('/')
         self.path_base = path_base.strip('/')
         self._base = '{}/{}'.format(self.url_base, self.path_base)
-        self._base = self._base.rstrip('/')
         self._opener = self._get_opener()
 
     def _get_opener(self):
         """
-        This returns a basic opener.  If auth is ever needed, this is the
-        place it would be implemented
+        This returns an opener with the API key header in it.
         """
         o = build_opener()
         o.addheaders = [('Authorization', f'Bearer {self.api_token}')]
         # add this opener to all future requests
         install_opener(o)
         return o
-    
+
     def call(self, call_type, call_dict, wait=False):
         """
         This handles all of the actual calls to the bgg api.  It takes the
